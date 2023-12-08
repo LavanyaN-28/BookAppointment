@@ -369,15 +369,26 @@ function onSubmit(e) {
     // Append to ul
     userList.appendChild(li);
 
-    localStorage.setItem("Name",nameInput.value)
-    localStorage.setItem("Email",emailInput.value)
+    // localStorage.setItem("Name",nameInput.value)
+    // localStorage.setItem("Email",emailInput.value)
 
-    console.log(localStorage.getItem("Name"))
-    console.log(localStorage.getItem("Email"))
+    // console.log(localStorage.getItem("Name"))
+    // console.log(localStorage.getItem("Email"))
 
-    // Clear fields
+var myObj={
+  objName : nameInput.value ,
+  objEmail:emailInput.value
+}
+
+var myObj_serialized=JSON.stringify(myObj)
+localStorage.setItem("myObj",myObj_serialized)
+//console.log(myObj_serialized)
+
+var myObj_deserial=JSON.parse(localStorage.getItem("myObj"))
+//console.log(myObj_deserial)
+
+// // Clear fields
     nameInput.value = '';
     emailInput.value = '';
   }
 }
-
