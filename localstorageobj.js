@@ -36,12 +36,16 @@ var myObj={
   objEmail:emailInput.value
 }
 
-var myObj_serialized=JSON.stringify(myObj)
-localStorage.setItem("myObj",myObj_serialized)
-//console.log(myObj_serialized)
-
-var myObj_deserial=JSON.parse(localStorage.getItem("myObj"))
-//console.log(myObj_deserial)
+var users=JSON.parse(localStorage.getItem("Users"))
+if(users==null) users=[]
+var myObj={
+    name : nameInput.value ,
+    email:emailInput.value
+  }
+  
+  users.push(myObj)
+  localStorage.setItem("Users",JSON.stringify(users))
+  
 
 // // Clear fields
     nameInput.value = '';
