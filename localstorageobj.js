@@ -22,33 +22,33 @@ function onSubmit(e) {
     const li = document.createElement('li');
 
     // Add text node with input values
-    li.appendChild(document.createTextNode(`${nameInput.value}: ${emailInput.value}`));
+    li.appendChild(document.createTextNode(`${nameInput.value}: ${emailInput.value}`))
 
-    // Add HTML
-    li.innerHTML = `<strong>${nameInput.value}</strong> : ${emailInput.value}`;
-
-    // Append to ul
+    var deleteBtn=document.createElement('button');
+    deleteBtn.className="deleteBtn"
+    deleteBtn.appendChild(document.createTextNode('Delete'));
+    li.appendChild(deleteBtn)
+   // Append to ul
     userList.appendChild(li);
 
+    const obj={
+        name : nameInput.value,
+        email : emailInput.value
+    }
 
-var myObj={
-  objName : nameInput.value ,
-  objEmail:emailInput.value
-}
-
-var users=JSON.parse(localStorage.getItem("Users"))
-if(users==null) users=[]
-var myObj={
-    name : nameInput.value ,
-    email:emailInput.value
-  }
-  
-  users.push(myObj)
-  localStorage.setItem("Users",JSON.stringify(users))
-  
-
-// // Clear fields
+    localStorage.setItem(obj.email,JSON.stringify(obj))
+    
+    
+ // Clear fields
     nameInput.value = '';
     emailInput.value = '';
-  }
+
+    //Delete Functionality
+    var ul=document.getElementById("users")
+    deleteBtn.onclick=function(email){
+        localStorage.removeItem(obj.email)
+        ul.removeChild(li)
+                
+    }
+}
 }
