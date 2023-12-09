@@ -24,10 +24,17 @@ function onSubmit(e) {
     // Add text node with input values
     li.appendChild(document.createTextNode(`${nameInput.value}: ${emailInput.value}`))
 
+    //DELETE BUTTON
     var deleteBtn=document.createElement('button');
     deleteBtn.className="deleteBtn"
     deleteBtn.appendChild(document.createTextNode('Delete'));
     li.appendChild(deleteBtn)
+
+    //EDIT BUTTON
+    var editBtn=document.createElement('button');
+    editBtn.className="edit"
+    editBtn.appendChild(document.createTextNode('Edit'));
+    li.appendChild(editBtn)
    // Append to ul
     userList.appendChild(li);
 
@@ -37,18 +44,23 @@ function onSubmit(e) {
     }
 
     localStorage.setItem(obj.email,JSON.stringify(obj))
-    
-    
- // Clear fields
+
+    //Clear Fields
     nameInput.value = '';
     emailInput.value = '';
-
+    
     //Delete Functionality
     var ul=document.getElementById("users")
     deleteBtn.onclick=function(email){
         localStorage.removeItem(obj.email)
         ul.removeChild(li)
                 
+    }
+
+    editBtn.onclick=function(email){
+        localStorage.removeItem(obj.email)
+        ul.removeChild(li)
+        document.getElementById("name").focus()
     }
 }
 }
