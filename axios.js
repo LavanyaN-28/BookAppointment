@@ -81,6 +81,7 @@ function showUsers(user){
      var editBtn=document.createElement('button');
      editBtn.className="edit"
      editBtn.appendChild(document.createTextNode('Edit'));
+     editBtn.addEventListener('click', () => updateUser(user._id));
      childElemnt.appendChild(editBtn)
     userList.appendChild(childElemnt)  
         
@@ -96,3 +97,13 @@ function deleteUser(userId){
             .catch(err => console.log(err))
         }
     }
+
+function updateUser(userId){
+    axios.put(`https://crudcrud.com/api/ed502b94419e4fd2a6c0fcbee7cdcdf7/appointmentData/${userId}`)
+    .then(response => {
+        nameInput.value=userDetails.name
+        emailInput.value=userDetails.email       
+        showUsers(response.data)
+    })
+    .catch(err => comsole.log(err))
+}
