@@ -3,7 +3,7 @@ const nameInput = document.querySelector('#name');
 const emailInput = document.querySelector('#email');
 const msg = document.querySelector('.msg');
 const userList = document.querySelector('#users');
-
+let userDetails=[]
 // Listen for form submit
 myForm.addEventListener('submit', onSubmit);
 var count=0
@@ -22,25 +22,17 @@ function onSubmit(e) {
     // Create new list item with user
     const li = document.createElement('li');
     const liText=document.createTextNode(nameInput.value)
-    //DELETE BUTTON
-    var deleteBtn=document.createElement('button');
-    deleteBtn.className="deleteBtn"
-    deleteBtn.appendChild(document.createTextNode('Delete'));
-    li.appendChild(deleteBtn)
-
-    //EDIT BUTTON
-    var editBtn=document.createElement('button');
-    editBtn.className="edit"
-    editBtn.appendChild(document.createTextNode('Edit'));
-    li.appendChild(editBtn)
+   
    // Append to ul
-   showUsers(obj)
-   userList.appendChild(li);
+  
+  
 
     const obj={
         name : nameInput.value,
         email : emailInput.value
     }
+
+    showUsers(obj)
     //Clear Fields
     nameInput.value = '';
     emailInput.value = '';
@@ -57,10 +49,11 @@ function onSubmit(e) {
         console.log(err)
     });
 
-    window.addEventListener("DOMContentLoaded",() => {
+    document.addEventListener("DOMContentLoaded",() => {
         axios.get('https://crudcrud.com/api/ed502b94419e4fd2a6c0fcbee7cdcdf7/appointmentData')
         .then(response => {
             for (var i=0;i<=response.data.length;i++){
+                productDetails.push(response.data);
                 showUsers(response.data[i])
                 console.log(response.data)}
     })
@@ -69,13 +62,37 @@ function onSubmit(e) {
             console.log(err)
         })
     })
+
 }
 }
 function showUsers(user){
-    const childElemnt=document.createElement('li')
+
+        const childElemnt=document.createElement('li')
     const edit=document.getElementById('edit')
     childElemnt.textContent=user.name + ' : ' + user.email
-    userList.appendChild(childElemnt)
-    
-    
-}
+     //DELETE BUTTON
+     var deleteBtn=document.createElement('button');
+     deleteBtn.className="deleteBtn"
+     deleteBtn.appendChild(document.createTextNode('Delete'));
+     deleteBtn.addEventListener('click', () => deleteUser(user._id));
+     childElemnt.appendChild(deleteBtn)
+ 
+     //EDIT BUTTON
+     var editBtn=document.createElement('button');
+     editBtn.className="edit"
+     editBtn.appendChild(document.createTextNode('Edit'));
+     childElemnt.appendChild(editBtn)
+    userList.appendChild(childElemnt)  
+        
+    }
+
+function deleteUser(userId){
+    {
+            axios.delete(`https://crudcrud.com/api/ed502b94419e4fd2a6c0fcbee7cdcdf7/appointmentData/${userId}`)
+            .then(response =>{ console.log(response)
+                userDetails = userDetails.filter(user => user._id !== userId);
+                showUsers(userDetails)
+        })
+            .catch(err => console.log(err))
+        }
+    }
